@@ -1,6 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" prism:ViewModelLocator.AutowireViewModel="True" x:Class="MobileFirstSample.Views.MainPage" Title="MainPage">
-	<StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-		<Label Text="{Binding Title}" />
-	</StackLayout>
+	<Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+		<ListView ItemsSource="{Binding CommandItemList}" SelectedItem="{Binding SelectedItem.Value, Mode=TwoWay}">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						<StackLayout Orientation="Horizontal" Spacing="25" Padding="20,0,0,0">
+							<Image Source="{Binding Image}" WidthRequest="30" HeightRequest="30"/>
+							<Label VerticalOptions="Center" Text="{Binding CommandName}"/>
+						</StackLayout>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		<Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsVisible="{Binding IsVisibleIndicator.Value}">
+			<BoxView Color="#4D000000" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+			<ActivityIndicator IsRunning="true" IsVisible="true" Color="White" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center"/>
+		</Grid>
+	</Grid>
 </ContentPage>
