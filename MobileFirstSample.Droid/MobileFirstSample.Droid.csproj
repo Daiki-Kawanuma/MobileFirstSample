@@ -136,6 +136,26 @@
     <Folder Include="Resources\drawable-hdpi\" />
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
+    <Folder Include="Resources\drawable-xxxhdpi\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Icon.png" />
+    <AndroidResource Include="Resources\drawable\Icon1.png" />
+    <AndroidResource Include="Resources\drawable\push_notification_icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\splash.9.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\splash.9.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\splash.9.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\connect.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\Icon1.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\invoke.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ispushenabled.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\issubscribed.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\logactivity.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\oauth.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\splash.9.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\subscribe.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\unsubscribe.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
