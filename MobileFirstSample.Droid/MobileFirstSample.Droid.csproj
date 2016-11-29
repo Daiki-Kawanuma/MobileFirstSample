@@ -96,6 +96,21 @@
     <Reference Include="Prism.Unity.Forms">
       <HintPath>..\packages\Prism.Unity.Forms.6.2.0\lib\MonoAndroid1.0\Prism.Unity.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="MobileFirst.Android.JSONStore">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\android\MobileFirst.Android.JSONStore.dll</HintPath>
+    </Reference>
+    <Reference Include="MobileFirst.Android.Push">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\android\MobileFirst.Android.Push.dll</HintPath>
+    </Reference>
+    <Reference Include="MobileFirst.Xamarin.Android">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\android\MobileFirst.Xamarin.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Worklight.Android">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\android\Worklight.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Worklight.Core">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\android\Worklight.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MobileFirstSample\MobileFirstSample.csproj">

@@ -118,6 +118,21 @@
     <Reference Include="Prism.Unity.Forms">
       <HintPath>..\packages\Prism.Unity.Forms.6.2.0\lib\Xamarin.iOS1.0\Prism.Unity.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="MobileFirst.iOS">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\ios-unified\MobileFirst.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="MobileFirst.iOS.JSONStore">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\ios-unified\MobileFirst.iOS.JSONStore.dll</HintPath>
+    </Reference>
+    <Reference Include="MobileFirst.iOS.Push">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\ios-unified\MobileFirst.iOS.Push.dll</HintPath>
+    </Reference>
+    <Reference Include="MobileFirst.Xamarin.iOS">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\ios-unified\MobileFirst.Xamarin.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Worklight.Core">
+      <HintPath>..\..\..\Downloads\ibm-worklight-8.0.0.4\lib\ios-unified\Worklight.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MobileFirstSample\MobileFirstSample.csproj">
