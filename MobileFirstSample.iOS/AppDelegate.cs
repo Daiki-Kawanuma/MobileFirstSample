@@ -4,8 +4,12 @@ using System.Linq;
 
 using Foundation;
 using Microsoft.Practices.Unity;
+using MobileFirst.Xamarin.iOS;
+using MobileFirst.Xamarin.iOS.Push;
 using Prism.Unity;
 using UIKit;
+using Worklight;
+using Worklight.Push;
 
 namespace MobileFirstSample.iOS
 {
@@ -36,7 +40,8 @@ namespace MobileFirstSample.iOS
 	{
 		public void RegisterTypes(IUnityContainer container)
 		{
-
+			container.RegisterInstance<IWorklightClient>(WorklightClient.CreateInstance());
+			container.RegisterInstance<IWorklightPush>(WorklightPush.Instance);
 		}
 	}
 }

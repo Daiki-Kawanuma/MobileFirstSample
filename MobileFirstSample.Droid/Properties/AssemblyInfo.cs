@@ -25,3 +25,18 @@ using Android.App;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
+
+[assembly: Permission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE", ProtectionLevel = Android.Content.PM.Protection.Signature)]
+[assembly: UsesPermission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
+
+// Gives the app permission to register and receive messages.
+[assembly: UsesPermission(Name = "com.google.android.c2dm.permission.RECEIVE")]
+
+// This permission is necessary only for Android 4.0.3 and below.
+[assembly: UsesPermission(Name = "android.permission.GET_ACCOUNTS")]
+
+// Need to access the internet for GCM
+[assembly: UsesPermission(Name = "android.permission.INTERNET")]
+
+// Needed to keep the processor from sleeping when a message arrives
+[assembly: UsesPermission(Name = "android.permission.WAKE_LOCK")]

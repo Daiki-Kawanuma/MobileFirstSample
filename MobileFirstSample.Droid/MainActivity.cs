@@ -9,6 +9,10 @@ using Android.Widget;
 using Android.OS;
 using Prism.Unity;
 using Microsoft.Practices.Unity;
+using Worklight;
+using Worklight.Xamarin.Android;
+using Worklight.Push;
+using Worklight.Xamarin.Android.Push;
 
 namespace MobileFirstSample.Droid
 {
@@ -21,15 +25,18 @@ namespace MobileFirstSample.Droid
 
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
-			LoadApplication(new App(new AndroidInitializer()));
+			LoadApplication(new App(new AndroidInitializer { Activity = this }));
 		}
 	}
 
 	public class AndroidInitializer : IPlatformInitializer
 	{
+		public Activity Activity { get; set; }
+
 		public void RegisterTypes(IUnityContainer container)
 		{
-
+			container.RegisterInstance<IWorklightClient>(WorklightClient.CreateInstance(Activity));
+			container.RegisterInstance<IWorklightPush>(WorklightPush.Instance);
 		}
 	}
 }

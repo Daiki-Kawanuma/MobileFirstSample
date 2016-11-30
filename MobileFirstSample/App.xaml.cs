@@ -8,10 +8,10 @@ namespace MobileFirstSample
 	{
 		public App(IPlatformInitializer initializer = null) : base(initializer) { }
 
-		protected override void OnInitialized()
+		protected async override void OnInitialized()
 		{
 			InitializeComponent();
-			NavigationService.NavigateAsync("NavigationPage/MainPage");
+			await NavigationService.NavigateAsync("NavigationPage/MainPage");
 		}
 
 		protected override void RegisterTypes()
