@@ -44,8 +44,8 @@ namespace MobileFirstSample
 		{
 			Client = wlc;
 			Push = push;
-			SecurityCheckChallengeHandler customCH = new CustomChallengeHandler(_appRealm);
-			Client.RegisterChallengeHandler(customCH);
+			SecurityCheckChallengeHandler customChallengeHandler = new CustomChallengeHandler(_appRealm);
+			Client.RegisterChallengeHandler(customChallengeHandler);
 			push.Initialize();
 		}
 		#endregion
@@ -61,21 +61,21 @@ namespace MobileFirstSample
 					.Append("/ResourceAdapter") //Name of the adapter
 					.Append("/publicData");    // Name of the adapter procedure
 
-				WorklightResourceRequest rr = Client.ResourceRequest(new Uri(uriBuilder.ToString(), 
+				WorklightResourceRequest resourceRequest = Client.ResourceRequest(new Uri(uriBuilder.ToString(), 
 		                                                             UriKind.Relative), 
 				                                                     "GET");
 
-				WorklightResponse resp = await rr.Send();
+				WorklightResponse response = await resourceRequest.Send();
 
-				result.Success = resp.Success;
+				result.Success = response.Success;
 				//result.Message = (resp.Success) ? "Connected" : resp.Message;
-				result.Response = resp.ResponseText;
+				result.Response = response.ResponseText;
 
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
@@ -91,21 +91,21 @@ namespace MobileFirstSample
 					.Append("/ResourceAdapter") //Name of the adapter
 					.Append("/balance");    // Name of the adapter procedure
 
-				WorklightResourceRequest rr = Client.ResourceRequest(new Uri(uriBuilder.ToString(), UriKind.Relative),
+				WorklightResourceRequest resourceRequest = Client.ResourceRequest(new Uri(uriBuilder.ToString(), UriKind.Relative),
 																	 "GET",
 																	 "accessRestricted");
 
-				WorklightResponse resp = await rr.Send();
+				WorklightResponse response = await resourceRequest.Send();
 
-				result.Success = resp.Success;
+				result.Success = response.Success;
 				//result.Message = (resp.Success) ? "Connected" : resp.Message;
-				result.Response = resp.Success ? "Your account balance is " + resp.ResponseText : resp.Message;
+				result.Response = response.Success ? "Your account balance is " + response.ResponseText : response.Message;
 
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
@@ -117,16 +117,16 @@ namespace MobileFirstSample
 
 			try
 			{
-				var resp = await Push.Subscribe(new string[] { "Xamarin" });
+				MFPPushMessageResponse response = await Push.Subscribe(new string[] { "Xamarin" });
 				Push.NotificationReceived += handleNotification;
-				result.Success = resp.Success;
+				result.Success = response.Success;
 				result.Message = "Subscribed";
-				result.Response = (resp.ResponseJSON != null) ? resp.ResponseJSON.ToString() : "";
+				result.Response = (response.ResponseJSON != null) ? response.ResponseJSON.ToString() : "";
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
@@ -138,15 +138,15 @@ namespace MobileFirstSample
 
 			try
 			{
-				var resp = await Push.RegisterDevice(new JObject());
-				result.Success = resp.Success;
+				MFPPushMessageResponse response = await Push.RegisterDevice(new JObject());
+				result.Success = response.Success;
 				result.Message = "Registered";
-				result.Response = (resp.ResponseJSON != null) ? resp.ResponseJSON.ToString() : "";
+				result.Response = (response.ResponseJSON != null) ? response.ResponseJSON.ToString() : "";
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
@@ -158,15 +158,15 @@ namespace MobileFirstSample
 
 			try
 			{
-				var resp = await Push.UnregisterDevice();
-				result.Success = resp.Success;
+				MFPPushMessageResponse response = await Push.UnregisterDevice();
+				result.Success = response.Success;
 				result.Message = "Unregistered";
-				result.Response = (resp.ResponseJSON != null) ? resp.ResponseJSON.ToString() : "";
+				result.Response = (response.ResponseJSON != null) ? response.ResponseJSON.ToString() : "";
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
@@ -185,16 +185,16 @@ namespace MobileFirstSample
 
 			try
 			{
-				var resp = await UnsubscribePush();
+				MFPPushMessageResponse response = await UnsubscribePush();
 
-				result.Success = resp.Success;
+				result.Success = response.Success;
 				result.Message = "Unsubscribed";
-				result.Response = (resp.ResponseJSON != null) ? resp.ResponseJSON.ToString() : "";
+				result.Response = (response.ResponseJSON != null) ? response.ResponseJSON.ToString() : "";
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
@@ -206,16 +206,16 @@ namespace MobileFirstSample
 
 			try
 			{
-				var resp = await GetSubscriptions();
+				MFPPushMessageResponse response = await GetSubscriptions();
 
-				result.Success = resp.Success;
+				result.Success = response.Success;
 				result.Message = "All Subscriptions";
-				result.Response = (resp.ResponseJSON != null) ? resp.ResponseJSON.ToString() : "";
+				result.Response = (response.ResponseJSON != null) ? response.ResponseJSON.ToString() : "";
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
@@ -227,16 +227,16 @@ namespace MobileFirstSample
 
 			try
 			{
-				var resp = await GetTags();
+				MFPPushMessageResponse response = await GetTags();
 
-				result.Success = resp.Success;
+				result.Success = response.Success;
 				result.Message = "All tags";
-				result.Response = (resp.ResponseJSON != null) ? resp.ResponseJSON.ToString() : "";
+				result.Response = (response.ResponseJSON != null) ? response.ResponseJSON.ToString() : "";
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
@@ -256,7 +256,7 @@ namespace MobileFirstSample
 			{
 				return await Push.Unsubscribe(new string[] { "xamarin " });
 			}
-			catch (Exception ex)
+			catch
 			{
 				return null;
 			}
@@ -297,36 +297,36 @@ namespace MobileFirstSample
 			try
 			{
 				Client.Analytics.Log("trying to invoking procedure");
-				System.Diagnostics.Debug.WriteLine("Trying to invoke proc");
+				Debug.WriteLine("Trying to invoke proc");
 				WorklightProcedureInvocationData invocationData = new WorklightProcedureInvocationData("SampleHTTPAdapter", "getFeed", new object[] { "technology" });
 				WorklightResponse task = await Client.InvokeProcedure(invocationData);
 				Client.Analytics.Log("invoke response : " + task.Success);
-				StringBuilder retval = new StringBuilder();
+				var returnvalue = new StringBuilder();
 
 				result.Success = task.Success;
 
 				if (task.Success)
 				{
-					JArray jsonArray = (JArray)task.ResponseJSON["rss"]["channel"]["item"];
+					var jsonArray = (JArray)task.ResponseJSON["rss"]["channel"]["item"];
 					foreach (JObject title in jsonArray)
 					{
 						JToken titleString;
 						title.TryGetValue("title", out titleString);
-						retval.Append(titleString.ToString());
-						retval.AppendLine();
+						returnvalue.Append(titleString.ToString());
+						returnvalue.AppendLine();
 					}
 				}
 				else
 				{
-					retval.Append("Failure: " + task.Message);
+					returnvalue.Append("Failure: " + task.Message);
 				}
 
-				result.Message = retval.ToString();
+				result.Message = returnvalue.ToString();
 			}
-			catch (Exception ex)
+			catch (Exception exception)
 			{
 				result.Success = false;
-				result.Message = ex.Message;
+				result.Message = exception.Message;
 			}
 
 			return result;
