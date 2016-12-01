@@ -23,10 +23,7 @@ namespace MobileFirstSample
 			SecurityCheck = realm;
 		}
 
-		public override string SecurityCheck
-		{
-			get; set;
-		}
+		public override string SecurityCheck{ get; set; }
 
 		public override JObject GetChallengeAnswer()
 		{
@@ -48,7 +45,6 @@ namespace MobileFirstSample
 			creds.Add("password", "user");
 			ChallengeAnswer = creds;
 			_shouldSubmitAnswer = true;
-
 		}
 
 		public override void HandleSuccess(JObject identity)

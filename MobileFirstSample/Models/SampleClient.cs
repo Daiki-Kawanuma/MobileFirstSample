@@ -11,9 +11,7 @@ namespace MobileFirstSample
 	public class SampleClient
 	{
 		#region Fields
-		private string _pushAlias = "myAlias2";
 		private string _appRealm = "UserLogin";
-		private JObject _metadata = JObject.Parse(" {\"platform\" : \"Xamarin\" } ");
 		#endregion
 
 		#region Properties
@@ -40,9 +38,9 @@ namespace MobileFirstSample
 		#endregion
 
 		#region Constuctors
-		public SampleClient(IWorklightClient wlc, IWorklightPush push)
+		public SampleClient(IWorklightClient client, IWorklightPush push)
 		{
-			Client = wlc;
+			Client = client;
 			Push = push;
 			SecurityCheckChallengeHandler customChallengeHandler = new CustomChallengeHandler(_appRealm);
 			Client.RegisterChallengeHandler(customChallengeHandler);
@@ -111,27 +109,6 @@ namespace MobileFirstSample
 			return result;
 		}
 
-		public async Task<WorklightResult> SubscribeAsync()
-		{
-			var result = new WorklightResult();
-
-			try
-			{
-				MFPPushMessageResponse response = await Push.Subscribe(new string[] { "Xamarin" });
-				Push.NotificationReceived += handleNotification;
-				result.Success = response.Success;
-				result.Message = "Subscribed";
-				result.Response = (response.ResponseJSON != null) ? response.ResponseJSON.ToString() : "";
-			}
-			catch (Exception exception)
-			{
-				result.Success = false;
-				result.Message = exception.Message;
-			}
-
-			return result;
-		}
-
 		public async Task<WorklightResult> RegisterAsync()
 		{
 			var result = new WorklightResult();
@@ -171,12 +148,25 @@ namespace MobileFirstSample
 
 			return result;
 		}
-		public static void handleNotification(object sender, EventArgs e)
+
+		public async Task<WorklightResult> SubscribeAsync()
 		{
-			PushEventArgs eventArgs = (PushEventArgs)e;
-			Debug.WriteLine("Notification received. Payload is " + eventArgs.Payload +
-							  ". URL is " + eventArgs.Url);
-			//HomePage._this.ShowAlert("Notified", eventArgs.Alert, "OK");
+			var result = new WorklightResult();
+
+			try
+			{
+				MFPPushMessageResponse response = await Push.Subscribe(new string[] { "Xamarin" });
+				result.Success = response.Success;
+				result.Message = "Subscribed";
+				result.Response = (response.ResponseJSON != null) ? response.ResponseJSON.ToString() : "";
+			}
+			catch (Exception exception)
+			{
+				result.Success = false;
+				result.Message = exception.Message;
+			}
+
+			return result;
 		}
 
 		public async Task<WorklightResult> UnSubscribeAsync()
@@ -185,7 +175,7 @@ namespace MobileFirstSample
 
 			try
 			{
-				MFPPushMessageResponse response = await UnsubscribePush();
+				MFPPushMessageResponse response = await Push.Unsubscribe(new string[] { "Xamarin" });
 
 				result.Success = response.Success;
 				result.Message = "Unsubscribed";
@@ -206,7 +196,7 @@ namespace MobileFirstSample
 
 			try
 			{
-				MFPPushMessageResponse response = await GetSubscriptions();
+				MFPPushMessageResponse response = await Push.GetSubscriptions();
 
 				result.Success = response.Success;
 				result.Message = "All Subscriptions";
@@ -227,7 +217,7 @@ namespace MobileFirstSample
 
 			try
 			{
-				MFPPushMessageResponse response = await GetTags();
+				MFPPushMessageResponse response = await Push.GetTags();
 
 				result.Success = response.Success;
 				result.Message = "All tags";
@@ -242,96 +232,6 @@ namespace MobileFirstSample
 			return result;
 		}
 
-		#endregion
-
-		#region Worklight Methods
-
-		/// <summary>
-		/// Unsubscribes from push notifications
-		/// </summary>
-		/// <returns>The push.</returns>
-		private async Task<MFPPushMessageResponse> UnsubscribePush()
-		{
-			try
-			{
-				return await Push.Unsubscribe(new string[] { "xamarin " });
-			}
-			catch
-			{
-				return null;
-			}
-
-		}
-
-		/// <summary>
-		/// Subscribes to push notifications
-		/// </summary>
-		/// <param name="callBack">Call back.</param>
-		private async Task<MFPPushMessageResponse> SubscribePush()
-		{
-			Debug.WriteLine("Subscribing to push");
-			return await Push.Subscribe(new string[] { "xamarin" });
-		}
-
-		private async Task<MFPPushMessageResponse> GetSubscriptions()
-		{
-			Debug.WriteLine("Getting list of subscriptions");
-			return await Push.GetSubscriptions();
-		}
-
-		private async Task<MFPPushMessageResponse> GetTags()
-		{
-			Debug.WriteLine("Getting list of all tags");
-			return await Push.GetTags();
-		}
-
-
-		/// <summary>
-		/// Invokes the procedured
-		/// </summary>
-		/// <returns>The proc.</returns>
-		private async Task<WorklightResult> InvokeProc()
-		{
-			var result = new WorklightResult();
-
-			try
-			{
-				Client.Analytics.Log("trying to invoking procedure");
-				Debug.WriteLine("Trying to invoke proc");
-				WorklightProcedureInvocationData invocationData = new WorklightProcedureInvocationData("SampleHTTPAdapter", "getFeed", new object[] { "technology" });
-				WorklightResponse task = await Client.InvokeProcedure(invocationData);
-				Client.Analytics.Log("invoke response : " + task.Success);
-				var returnvalue = new StringBuilder();
-
-				result.Success = task.Success;
-
-				if (task.Success)
-				{
-					var jsonArray = (JArray)task.ResponseJSON["rss"]["channel"]["item"];
-					foreach (JObject title in jsonArray)
-					{
-						JToken titleString;
-						title.TryGetValue("title", out titleString);
-						returnvalue.Append(titleString.ToString());
-						returnvalue.AppendLine();
-					}
-				}
-				else
-				{
-					returnvalue.Append("Failure: " + task.Message);
-				}
-
-				result.Message = returnvalue.ToString();
-			}
-			catch (Exception exception)
-			{
-				result.Success = false;
-				result.Message = exception.Message;
-			}
-
-			return result;
-
-		}
 		#endregion
 	}
 }
